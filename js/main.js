@@ -32,7 +32,7 @@ const cartIconSvg = document.querySelector('#cart-icon-svg');
 const navLinkItem = document.querySelectorAll('.nav__link__item');
 const searchIconSvg = document.querySelector("#search-icon-svg");
 const mobileMenuNav = document.querySelector(".mobile-menu__nav");
-export const baseUrl = 'http://pariarf.github.io/pariarf';
+export const baseUrl = 'https://pariarf.github.io/pariarf';
 
 // MOBILE MENU
 mobileMenuIcon.addEventListener("click", () => {
