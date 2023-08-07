@@ -96,14 +96,14 @@ export function router() {
         }
     }) : null;
     if (match) {
-        if (match.route.path == '/cart') {
+        if (match.route.path == '/pariarf/cart') {
             cartIcon.classList.add("cart-active");
             cartIconSvg.classList.add("cart-active-icon");
         } else {
             cartIcon.classList.remove("cart-active");
             cartIconSvg.classList.remove("cart-active-icon");
         }
-        if (match.route.path == '/searchresult') {
+        if (match.route.path == '/pariarf/searchresult') {
             searchIcon.classList.add("cart-active");
             searchIconSvg.classList.add("cart-active-icon-search");
         } else {
@@ -114,7 +114,7 @@ export function router() {
 
     if (!match) {
         match = {
-            route: { path: "/not-found", title: "پیدا نشد!", view: NotFound },
+            route: { path: "/pariarf/not-found", title: "پیدا نشد!", view: NotFound },
             isMatch: true
         }
     };
