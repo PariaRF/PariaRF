@@ -7,9 +7,9 @@
     <script>
         let userState = JSON.parse(localStorage.getItem("userState"));
 
-        console.log(userState);
 
-        sessionStorage.redirect = location.href;
+        sessionStorage.redirect = userState;
+        // console.log(userState, location.href);
 
         const metaTag = document.createElement('meta');
         metaTag.setAttribute('http-equiv', 'refresh');
