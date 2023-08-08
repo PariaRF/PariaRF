@@ -5,9 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
+        let userState = localStorage.getItem(JSON.parse("userState"));
+        console.log(userState);
+
         sessionStorage.redirect = location.href;
+
+        const metaTag = document.createElement('meta');
+        metaTag.setAttribute('http-equiv', 'refresh');
+        let url = `${userState}`;
+        const contentValue = `0;URL='${url}'`;
+        metaTag.setAttribute('content', contentValue);
+        document.head.appendChild(metaTag);
     </script>
-    <meta http-equiv="refresh" content="0;URL='/pariarf'">
 </head>
 
 <body>
