@@ -80,7 +80,7 @@ export function router() {
     const potentialRoutes = routes.map((route) => {
         // let saveUrl = `${baseUrl}${route.path}`;
         let saveUrl = window.location.href;
-        localStorage.setItem("userState", JSON.stringify(saveUrl));
+        localStorage.setItem("userState", saveUrl);
         return {
             route: route,
             isMatch: location.pathname === route.path,
