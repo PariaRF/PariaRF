@@ -923,7 +923,7 @@ footer {
 
     .restaurant__menu__content {
         width: 100vw;
-        height: 436px;
+        height: 120px;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 100%);
         justify-items: center;
