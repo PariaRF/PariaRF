@@ -83,7 +83,7 @@ export function router() {
         localStorage.setItem("userState", saveUrl);
         return {
             route: route,
-            isMatch: location.pathname === route.path,
+            isMatch: (location.pathname === route.path) || (location.pathname === (route.path + "/")),
         }
     })
 
