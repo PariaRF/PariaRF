@@ -110,31 +110,6 @@ class Cart {
         const cartEntity = CartStrorage.getCart();
         cart = cartEntity;
 
-        app.addEventListener("click", (e) => {
-
-            if (e.target.classList.contains("cart__item__increase")) {
-
-                let target = e.target;
-                CartLogic.increaseQuantityItem(target);
-
-            }
-
-            if (e.target.classList.contains("cart__item__decrease")) {
-
-                let target = e.target;
-                CartLogic.deacreseQuantityItem(target);
-
-            }
-
-            if (e.target.classList.contains("cart__item__remove")) {
-
-                const parentElement = e.target.closest(".cart__item");
-                const id = e.target.dataset.id;
-                CartLogic.removeCartItem(id, parentElement);
-
-            }
-        });
-
         let renderCartItem = "";
         cartEntity.forEach(item => {
             renderCartItem += `<div class="cart__item" data-id=${item.id}>
@@ -192,16 +167,6 @@ class Cart {
         const cartEntity = CartStrorage.getCart();
         cart = cartEntity;
         const [tempCartItem, totalDiscount, totalPrice] = CartLogic.setCartValue(cart);
-
-        app.addEventListener("click", (e) => {
-            if (e.target.classList.contains("cart-bill__clear-cart")) {
-                const multiStepCartContainer = document.querySelector(".multi-step__cart-container");
-                CartLogic.clearCart(multiStepCartContainer);
-                multiStepCartContainer.setAttribute("style", "background-image: url('assets/images/empty-page.png')");
-                multiStepCartContainer.style.backgroundRepeat = "no-repeat";
-                multiStepCartContainer.style.backgroundSize = "cover";
-            }
-        })
 
         return `
                 <div class="multi-step__body-container flex-center">
@@ -394,6 +359,9 @@ export class CartLogic {
                 SearchResualt.clearCart();
             }
             multiStepCartContainer.removeChild(parentElement);
+            multiStepCartContainer.setAttribute("style", "background-image: url('client/assets/images/EmptyPage.png')");
+            multiStepCartContainer.style.backgroundRepeat = "no-repeat";
+            multiStepCartContainer.style.backgroundSize = "cover";
         }
     }
 

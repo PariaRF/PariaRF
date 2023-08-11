@@ -131,31 +131,12 @@ class SearchResult {
 
         mainCoursesContainer.innerHTML = renderPage;
 
-        const app = document.getElementById("app");
-        app.addEventListener("click", (event) => {
-            const checkClick = event.target.classList.contains('main-courses-card__btn');
-            if (checkClick) {
-                const addToCardButton = event.target;
-                const id = addToCardButton.dataset.id;
-                addToCardButton.innerText = 'موجود در سبد خرید';
-                addToCardButton.disabled = true;
-                addToCardButton.style.opacity = "0.8";
-                addToCardButton.style.cursor = "not-allowed";
-
-                const adddedItem = Storage.findMenuItem(id);
-                cart = [...cart, { ...adddedItem, quantity: 1 }];
-                Storage.saveCart(cart);
-                this.setCartValue(cart);
-            }
-        })
-
         return mainCoursesContainer.outerHTML;
     }
 
     setupApp() {
         cart = Storage.getCart() || [];
         this.setCartValue(cart);
-        // this.addToCart();
     }
 
     clearCart() {

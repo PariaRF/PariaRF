@@ -8,6 +8,8 @@ const MainPage = () => {
         const branchesModalBackdrop = document.querySelector(".backdrop-modal");
         const restaurantMenuContainer = document.querySelector('.restaurant__menu__content');
         const branchesContainer = document.querySelector('.branches__container');
+        const aboutRestaurantText = document.querySelector('.about-restaurant__text');
+        const aboutRestaurantIcons = document.querySelector('.about-restaurant__icons');
         const branchesModalContainer = document.querySelector('.branches-modal-container');
         const body = document.getElementsByTagName("body");
 
@@ -42,6 +44,13 @@ const MainPage = () => {
                 restaurantMenuContainer.classList.add('showContainerMainPage');
             } else {
                 restaurantMenuContainer.classList.remove('showContainerMainPage');
+            }
+            if (scrollPossition >= 319) {
+                aboutRestaurantText.classList.add('showAboutRestuarantMainPage');
+                aboutRestaurantIcons.classList.add('showAboutRestuarantIconsMainPage');
+            } else {
+                aboutRestaurantText.classList.remove('showAboutRestuarantMainPage');
+                aboutRestaurantIcons.classList.remove('showAboutRestuarantIconsMainPage');
             }
             if (scrollPossition >= 589) {
                 branchesContainer.classList.add('showContainerMainPage');
