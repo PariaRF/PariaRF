@@ -2063,6 +2063,10 @@ footer {
     font-size: 12px;
 }
 
+.cart__item__detail__ingredients {
+    width: 50%;
+}
+
 .cart__item__main-price {
     width: 9rem;
     display: flex;
