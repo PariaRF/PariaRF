@@ -134,7 +134,7 @@ class Cart {
                         </i>
                     </div>
                     <div class="cart__item__detail info__row">
-                        <span>کدو خورد شده ،پاستا، قارچ، گوجه، پیاز خلالی شده</span>
+                        <span>${item.ingredients}</span>
                         <div class="cart__item__main-price">
                         <span class="cart-item__detail__price">${item.price ? CartLogic.formatter(item.price) : ""}</span>
                         <span class="cart-item__detail__discount">${item.discount_percent !== null ? `${item.discount_percent}%` : ""}</span>

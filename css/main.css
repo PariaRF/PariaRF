@@ -2603,6 +2603,9 @@ footer {
     font-size: 11px;
     width: 57%;
     color: var(--gray-eight);
+    overflow: hidden;
+    overflow-y: hidden;
+    max-height: 42px;
 }
 
 .menu-card-item {

@@ -50,7 +50,7 @@ mobileMenuIcon.addEventListener("click", () => {
 })
 
 mobileMenuNav.addEventListener("click", (e) => {
-    if (e.target.tagName === "A" && e.target.innerText !== "شعبه" && e.target.innerText !== "منو") {
+    if (e.target.tagName === "A" && e.target.innerText !== "شعبه") {
         closeMobileMenu();
     }
 })
