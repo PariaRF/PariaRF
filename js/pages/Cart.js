@@ -1,5 +1,5 @@
 import { baseUrl, router } from "../main.js";
-import SearchResualt, { Storage } from "./searchResualtPage/SearchResualt.js";
+import SearchResualt from "./searchResualtPage/SearchResualt.js";
 
 const app = document.querySelector("#app");
 
@@ -91,7 +91,7 @@ class Cart {
     emptyCart() {
         app.addEventListener("click", (e) => {
             if (e.target.classList.contains("restaurant-menu")) {
-                let newUrl = `${baseUrl}/searchresult`;
+                let newUrl = `${baseUrl}/menu`;
                 window.history.pushState(null, null, newUrl);
                 router();
             }
@@ -112,11 +112,11 @@ class Cart {
 
         let renderCartItem = "";
         cartEntity.forEach(item => {
-            renderCartItem += `<div class="cart__item" data-id=${item.id}>
-                <img class="cart__item__img" src="${item.imageUrl}" alt="food"/>
+            renderCartItem += `<div id="cart-item" class="cart__item" data-id=${item.id}>
+                <img class="cart__item__img" src="${item.thumbnail}" alt="food"/>
                 <div class="cart__item__info">
                     <div class="cart__item__tite info__row">
-                        <h3>${item.title}</h3>
+                        <h3>${item.name}</h3>
                         <i>
                             <svg data-id=${item.id} class="cart__item__remove" width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g class="color-fill" id="vuesax/outline/trash">
@@ -136,23 +136,23 @@ class Cart {
                     <div class="cart__item__detail info__row">
                         <span>کدو خورد شده ،پاستا، قارچ، گوجه، پیاز خلالی شده</span>
                         <div class="cart__item__main-price">
-                            <span class="cart-item__detail__price">${CartLogic.formatter(item.orgPrice)}</span>
-                            <span class="cart-item__detail__discount">${persianJs(item.discount).englishNumber().toString()}</span>
+                        <span class="cart-item__detail__price">${item.price ? CartLogic.formatter(item.price) : ""}</span>
+                        <span class="cart-item__detail__discount">${item.discount_percent !== null ? `${item.discount_percent}%` : ""}</span>
                         </div>
                     </div>
                     <div class="cart__item__footer info__row">
                         <div class="cart__item__action info__row">
                             <div class="cart__item__action__container">
                                 <div class="cart__item__action__rate flex-center">
-                                    <img src="assets/images/star.png" alt="rate"/>
+                                    <img src="/pariarf/assets/images/star.png" alt="rate"/>
                                 </div>
                                 <div class="cart__item__action__count">
                                     <button class="cart__item__increase reset" data-id=${item.id}>+</button>
-                                    <span class="cart__item__quantity">${persianJs(item.quantity).englishNumber().toString()}</span>
+                                    <span class="cart__item__quantity">${item.quantity}</span>
                                     <button class="cart__item__decrease reset" data-id=${item.id}>-</button>
                                 </div>
                             </div>
-                            <span class="cart__item__final__price">${CartLogic.formatter(item.discountedPrice)}تومان</span>
+                            <span class="cart__item__final__price">${CartLogic.formatter(item.discount_amount)}تومان</span>
                         </div>
                     </div>
                 </div>
@@ -325,8 +325,8 @@ export class CartLogic {
         if (cart) {
             totalPrice = cart.reduce((acc, curr) => {
                 tempCartItem += curr.quantity;
-                totalDiscount += ((parseInt(curr.orgPrice) - parseInt(curr.discountedPrice)) * curr.quantity);
-                return acc + curr.quantity * parseInt(curr.discountedPrice);
+                totalDiscount += curr.price ? (((curr.price ? parseInt(curr.price) : 0) - parseInt(curr.discount_amount)) * curr.quantity) : 0;
+                return acc + curr.quantity * parseInt(curr.discount_amount);
             }, 0);
         }
 
@@ -339,7 +339,7 @@ export class CartLogic {
         const cartBillTempCount = app.querySelector(".cart-bill__temp-count");
         const cartBillDiscountNum = app.querySelector(".cart-bill__discount-num");
 
-        cartBillTotalPriceNum.innerText = `${CartLogic.formatter(totalPrice)} تومان`;
+        cartBillTotalPriceNum.textContent = `${CartLogic.formatter(totalPrice)} تومان`;
         cartBillTempCount.textContent = `(${CartLogic.formatter(tempCartItem)})`;
         cartBillDiscountNum.textContent = `${CartLogic.formatter(totalDiscount)} تومان`;
     }
@@ -357,11 +357,12 @@ export class CartLogic {
             if (cartEntity.length == 1) {
                 localStorage.removeItem("cart");
                 SearchResualt.clearCart();
+                multiStepCartContainer.setAttribute("style", "background-image: url('assets/images/EmptyPage.png')");
+                multiStepCartContainer.style.backgroundRepeat = "no-repeat";
+                multiStepCartContainer.style.backgroundSize = "cover";
+                multiStepCartContainer.style.backgroundPosition = "center";
             }
             multiStepCartContainer.removeChild(parentElement);
-            multiStepCartContainer.setAttribute("style", "background-image: url('client/assets/images/EmptyPage.png')");
-            multiStepCartContainer.style.backgroundRepeat = "no-repeat";
-            multiStepCartContainer.style.backgroundSize = "cover";
         }
     }
 

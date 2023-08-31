@@ -3,6 +3,7 @@ import Cart, { CartLogic, CartStrorage } from "./pages/Cart.js";
 import ContactUs from "./pages/ContactUs.js";
 import MainPage from "./pages/mainPage/MainPage.js";
 import NotFound from "./pages/NotFound.js";
+import Menu, { MenuStorage } from "./pages/Menu.js";
 import NotFountRearchResult from "./pages/NotFountRearchResult.js";
 import Representation from "./pages/Representation.js";
 import SearchResualt from "./pages/searchResualtPage/SearchResualt.js";
@@ -33,6 +34,13 @@ const cartIconSvg = document.querySelector('#cart-icon-svg');
 const navLinkItem = document.querySelectorAll('.nav__link__item');
 const searchIconSvg = document.querySelector("#search-icon-svg");
 const mobileMenuNav = document.querySelector(".mobile-menu__nav");
+
+export let allData = [];
+export let search = {
+    searchItem: "",
+};
+export let mainCourseContainerDiv;
+
 export const baseUrl = 'https://pariarf.github.io/pariarf';
 
 // MOBILE MENU
@@ -73,8 +81,8 @@ export function router() {
         { path: "/pariarf/aboutus", title: "درباره ما", view: AboutUs },
         { path: "/pariarf/contactus", title: "تماس با ما", view: ContactUs },
         { path: "/pariarf/notfoundsearchresult", title: "!پیدا نشد", view: NotFountRearchResult.renderNotFoundSearchResult },
-        { path: "/pariarf/searchresult", title: "جستجو", view: SearchResualt.SearchResultPage },
         { path: "/pariarf/cart", title: "سبد خرید", view: Cart.renederCartPage },
+        { path: "/pariarf/menu", title: "منو", view: Menu.renderMenuPage },
         { path: "/pariarf/not-found", title: "پیدا نشد!", view: NotFound },
     ];
 
@@ -145,34 +153,52 @@ document.addEventListener("DOMContentLoaded", () => {
     Storage.savedMenuItemOnStrorage(getAllMenuItem);
     Storage.getMenuItemFromStorage();
     SearchResualt.setupApp();
-    const cartEntity = CartStrorage.getCart();
+    CartStrorage.getCart();
+    CartStrorage.getCart();
+    let isMenuData = MenuStorage.getMenuData();
+    if (!isMenuData.length > 0) {
+        async function fetchData() {
+            try {
+                const response = await axios.get('https://64db963d593f57e435b12cf9.mockapi.io/tarkhineh/foods');
+                if (response.status !== 200) {
+                    throw new Error('Failed to fetch data from the API');
+                }
+                return response.data;
+            } catch (error) {
+                alert(error);
+            }
+        }
+
+        fetchData()
+            .then(data => {
+                MenuStorage.saveMenuData(data);
+                MenuStorage.getMenuData();
+                allData.push(...data);
+                Menu.renderMainCourse(allData, search);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    } else {
+        allData.push(...isMenuData);
+        Menu.renderMainCourse(allData, search);
+    }
 })
 
 // CHANGE ROUTE ON SEARCH RESULT
 searchInMenu.addEventListener("keydown", (e) => {
     if (e.code === "Enter" || e.code === "NumpadEnter") {
-        if (e.target.value == "پاستا") {
-            e.target.value = "";
-            closeModalSearch();
-            e.preventDefault();
-            let newUrl = `${baseUrl}/searchresult`;
-            setTimeout(() => {
-                window.history.pushState(null, null, newUrl);
-                router();
-            }, 600);
-        } else {
-            const searchTerms = e.target.value;
-            const encodedTerms = encodeURIComponent(searchTerms);
-            e.target.value = "";
-            closeModalSearch();
-            e.preventDefault();
-            let newUrl = `${baseUrl}/notfoundsearchresult?search=${encodedTerms}`;
-            setTimeout(() => {
-                window.history.pushState(null, null, newUrl);
-                router();
-            }, 600);
-        }
-
+        const searchTerms = e.target.value;
+        const encodedTerms = encodeURIComponent(searchTerms);
+        e.target.value = "";
+        closeModalSearch();
+        e.preventDefault();
+        let newUrl = `${baseUrl}/notfoundsearchresult?search=${encodedTerms}`;
+        setTimeout(() => {
+            window.history.pushState(null, null, newUrl);
+            router();
+        }, 600);
     }
 })
 
@@ -269,18 +295,18 @@ app.addEventListener("click", (event) => {
         addToCardButton.style.opacity = "0.8";
         addToCardButton.style.cursor = "not-allowed";
 
-        const adddedItem = Storage.findMenuItem(id);
+        const adddedItem = MenuStorage.findMenuItem(id);
         let cart = CartStrorage.getCart() || [];
         cart = [...cart, { ...adddedItem, quantity: 1 }];
         Storage.saveCart(cart);
-        SearchResult.setCartValue(cart);
+        Menu.setCartValue(cart);
     }
 
     if (event.target.classList.contains("cart-bill__clear-cart")) {
         const multiStepCartContainer = document.querySelector(".multi-step__cart-container");
         CartLogic.clearCart(multiStepCartContainer);
         SearchResualt.clearCart();
-        multiStepCartContainer.setAttribute("style", "background-image: url('client/assets/images/EmptyPage.png')");
+        multiStepCartContainer.setAttribute("style", "background-image: url('assets/images/EmptyPage.png')");
         multiStepCartContainer.style.backgroundRepeat = "no-repeat";
         multiStepCartContainer.style.backgroundSize = "cover";
     }
@@ -304,5 +330,36 @@ app.addEventListener("click", (event) => {
         const id = event.target.dataset.id;
         CartLogic.removeCartItem(id, parentElement);
 
+    }
+    if (event.target.classList.contains("tab-button")) {
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-pane");
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                tabButtons.forEach(tabBtn => tabBtn.classList.remove('active'));
+                tabContents.forEach(content => { content.classList.remove('active') });
+
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            })
+        })
+    }
+
+    if (event.target.classList.contains("menu-actions__search__input")) {
+        let menuActionsSearch = event.target;
+        mainCourseContainerDiv = app.querySelector(".main-course-container");
+        menuActionsSearch.addEventListener("input", (e) => {
+            search.searchItem = e.target.value;
+            Menu.renderMainCourse(allData, search);
+        })
+    }
+
+    if (event.target.classList.contains("menu-card-button")) {
+        event.preventDefault();
+        let newUrl = `${baseUrl}/cart`;
+        window.history.pushState(null, null, newUrl);
+        router();
     }
 })
