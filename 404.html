@@ -76,22 +76,8 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav__link nav__link__item" id="menu-item">
-                        <a data-link="" class="submenu__label">منو</a>
-                        <div class="submenu">
-                            <div class="submenu__item">
-                                <span>پیش غذا</span>
-                            </div>
-                            <div class="submenu__item">
-                                <span>غذای اصلی</span>
-                            </div>
-                            <div class="submenu__item">
-                                <span>دسر</span>
-                            </div>
-                            <div class="submenu__item">
-                                <span>نوشیدنی</span>
-                            </div>
-                        </div>
+                    <li class="nav__link">
+                        <a href="/pariarf/menu" data-link="" class="nav__link__item">منو</a>
                     </li>
                     <li class="nav__link">
                         <a href="/pariarf/representation" data-link="" class="nav__link__item">اعطای نمایندگی</a>
@@ -289,7 +275,7 @@
                         </svg>
 
                     </i>
-                    <a class="nav__link__item" data-link="" href="#">منو</a>
+                    <a class="nav__link__item" data-link="" href="/pariarf/menu">منو</a>
                 </li>
                 <li class="nav__link">
                     <i>
@@ -365,7 +351,7 @@
             <div class="search-modal__body">
                 <span>لطفا متن خود را تایپ و سپس دکمه Enter را بزنید.</span>
                 <div class="search-box-container">
-                    <input class="reset search-in-menu" type="text" autofocus placeholder="پاستا..." autocomplete="off">
+                    <input class="reset search-in-menu" type="text" autofocus placeholder="جستجو..." autocomplete="off">
                     <i>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -441,6 +427,7 @@
         </div>
     </footer>
 
+    <script src="js/library/axios.js"></script>
     <script src="js/library/persian.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
