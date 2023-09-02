@@ -2867,11 +2867,11 @@ footer {
 
 @media screen and (max-width: 390px) {
     .menu-card__price-details {
-        padding: 0 3rem 0 0;
+        padding: 0 2rem 0 0;
     }
 
     .tab-content-container {
-        overflow-x: hidden;
+        overflow: hidden;
         padding: 0 1rem;
     }
 
@@ -2880,10 +2880,16 @@ footer {
     }
 
     .responsive-mode {
-        width: 120px;
+        width: 225px;
     }
 
     .menu-card-item__ingredients {
-        width: 120px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .responsive-mode {
+        width: 200px;
     }
 }

@@ -290,7 +290,7 @@ app.addEventListener("click", (event) => {
     if (checkClick) {
         const addToCardButton = event.target;
         const id = addToCardButton.dataset.id;
-        addToCardButton.innerText = 'موجود در سبد خرید';
+        addToCardButton.classList.add("larg-screen-content-exist");
         addToCardButton.disabled = true;
         addToCardButton.style.opacity = "0.8";
         addToCardButton.style.cursor = "not-allowed";
