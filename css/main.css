@@ -893,6 +893,7 @@ footer {
     height: 15rem;
     position: absolute;
     top: -69px;
+    cursor: pointer;
 }
 
 .content__item__btn {
@@ -948,6 +949,7 @@ footer {
     .menu__content__item {
         width: 100%;
         height: calc(100% - 0px);
+        cursor: pointer;
     }
 
     .content__item__img {
@@ -1657,6 +1659,14 @@ footer {
     font-family: estedad-bold;
 }
 
+.larg-screen-content::before {
+    content: "افزودن به سبد خرید";
+}
+
+.larg-screen-content-exist::before {
+    content: "موجود در سبد خرید";
+}
+
 .exist-in-cart {
     cursor: not-allowed;
     opacity: 0.8;
@@ -1676,6 +1686,18 @@ footer {
 
     .main-courses-card__body {
         padding-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .larg-screen-content::before {
+        content: "";
+        content: "افزودن";
+    }
+
+    .larg-screen-content-exist::before {
+        content: "";
+        content: "موجود";
     }
 }
 
@@ -1974,6 +1996,13 @@ footer {
     flex-direction: column;
     padding: 1.5rem;
     scrollbar-width: thin;
+}
+
+.multi-step__cart-container-bg {
+    background-image: url(../assets/images/empty-page.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .multi-step__cart-container::-webkit-scrollbar {
@@ -2427,7 +2456,6 @@ footer {
     width: 100%;
     min-height: 100vh;
     height: fit-content;
-    overflow-y: scroll;
     margin-bottom: 3rem;
 }
 
@@ -2662,6 +2690,16 @@ footer {
     font-family: estedad-regular;
 }
 
+.image-container {
+    width: 14rem;
+    height: 100%;
+}
+
+#imageElement {
+    width: 14rem;
+    height: 100%;
+}
+
 .menu-card-item__rate {
     width: 10rem;
     height: 2rem;
@@ -2692,6 +2730,16 @@ footer {
     .tabs {
         width: 100%;
         padding: 0 3.5rem;
+    }
+
+    .image-container {
+        width: 96px;
+        height: 100%;
+    }
+
+    #imageElement {
+        width: 96px;
+        height: 100%;
     }
 }
 
@@ -2817,8 +2865,25 @@ footer {
     }
 }
 
-@media screen and (width: 390px) {
+@media screen and (max-width: 390px) {
     .menu-card__price-details {
         padding: 0 3rem 0 0;
+    }
+
+    .tab-content-container {
+        overflow-x: hidden;
+        padding: 0 1rem;
+    }
+
+    #imageElement {
+        width: 88px;
+    }
+
+    .responsive-mode {
+        width: 120px;
+    }
+
+    .menu-card-item__ingredients {
+        width: 120px;
     }
 }

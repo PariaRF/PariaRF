@@ -306,9 +306,7 @@ app.addEventListener("click", (event) => {
         const multiStepCartContainer = document.querySelector(".multi-step__cart-container");
         CartLogic.clearCart(multiStepCartContainer);
         SearchResualt.clearCart();
-        multiStepCartContainer.setAttribute("style", "background-image: url('assets/images/EmptyPage.png')");
-        multiStepCartContainer.style.backgroundRepeat = "no-repeat";
-        multiStepCartContainer.style.backgroundSize = "cover";
+        multiStepCartContainer.classList.add("multi-step__cart-container-bg");
     }
     if (event.target.classList.contains("cart__item__increase")) {
 
@@ -359,6 +357,12 @@ app.addEventListener("click", (event) => {
     if (event.target.classList.contains("menu-card-button")) {
         event.preventDefault();
         let newUrl = `${baseUrl}/cart`;
+        window.history.pushState(null, null, newUrl);
+        router();
+    }
+    if (event.target.classList.contains("menu__content__item") || event.target.classList.contains("content__item__img") || event.target.classList.contains("content__item__btn")) {
+        event.preventDefault();
+        let newUrl = `${baseUrl}/menu`;
         window.history.pushState(null, null, newUrl);
         router();
     }

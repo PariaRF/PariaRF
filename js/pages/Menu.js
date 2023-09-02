@@ -100,29 +100,17 @@ class Menu {
                     image.id = "imageElement";
                     image.alt = "singleItem.name";
                     image.src = singleItem.thumbnail;
-                    image.style.width = "14rem";
-                    image.style.maxHeight = "100%";
 
                     let imageDiv = document.createElement("div");
-                    imageDiv.style.width = "14rem";
-                    imageDiv.style.maxHeight = "100%";
+                    imageDiv.classList.add("image-container");
 
                     imageDiv.appendChild(image);
 
                     const addToCartButton = document.createElement('button');
-                    addToCartButton.classList.add("reset", "main-courses-card__btn");
+                    addToCartButton.classList.add("reset", "main-courses-card__btn", ExistInCart ? "larg-screen-content-exist" : "larg-screen-content");
                     addToCartButton.classList.add(ExistInCart ? "exist-in-cart" : "nothing");
                     addToCartButton.dataset.id = singleItem.id;
 
-                    if (mediaQuery.matches) {
-                        addToCartButton.textContent = ExistInCart ? "موجود" : "افزودن";
-                        imageDiv.style.width = "96px";
-                        imageDiv.style.maxHeight = "100%";
-                        image.style.width = "96px";
-                        image.style.height = "100%";
-                    } else {
-                        addToCartButton.textContent = ExistInCart ? "موجود در سبد خرید" : "افزودن به سبد خرید";
-                    }
                     ExistInCart ? addToCartButton.disabled = true : addToCartButton.disabled = false;
 
                     menuCard += `
@@ -161,7 +149,7 @@ class Menu {
 
     renderOtherTab() {
         return `
-            <img src="/pariarf/assets/images/maintnance.png" />
+            <img src="/pariarf/assets/images/maintnance.png"/>
         `
     }
 

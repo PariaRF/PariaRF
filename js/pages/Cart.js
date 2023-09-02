@@ -357,10 +357,7 @@ export class CartLogic {
             if (cartEntity.length == 1) {
                 localStorage.removeItem("cart");
                 SearchResualt.clearCart();
-                multiStepCartContainer.setAttribute("style", "background-image: url('assets/images/EmptyPage.png')");
-                multiStepCartContainer.style.backgroundRepeat = "no-repeat";
-                multiStepCartContainer.style.backgroundSize = "cover";
-                multiStepCartContainer.style.backgroundPosition = "center";
+                multiStepCartContainer.classList.add("multi-step__cart-container-bg");
             }
             multiStepCartContainer.removeChild(parentElement);
         }
